@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -14,7 +14,9 @@ public class Main {
 
             try {
                 final Path path = Paths.get(filename);
-                final CodeLineFile file = CodeLineFileCreator.build(path, new CodeLineFile(path.toString()));
+                final CodeLineFile file = CodeLineFileCreator.build(
+                        path, new CodeLineFile(path.getFileName().toString())
+                );
 
                 System.out.print(file);
             } catch (IOException e) {

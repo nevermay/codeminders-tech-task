@@ -24,7 +24,7 @@ public final class CodeLineFileCreator {
         final String tab = indent + EMPTY_SPACE;
         for (final Path childPath : Files.list(rootPath).collect(Collectors.toList())) {
             if (Files.isDirectory(childPath)) {
-                final String tabulatedName = tab + childPath.toFile().getName();
+                final String tabulatedName = tab + childPath.getFileName().toString();
                 final CodeLineFile childDirectory = new CodeLineFile(tabulatedName);
                 root.addChild(childDirectory);
 
@@ -42,7 +42,7 @@ public final class CodeLineFileCreator {
         final List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
         final int linesOfCode = CodeLineCounter.count(lines);
 
-        final String tabulatedName = tab + filePath.toFile().getName();
+        final String tabulatedName = tab + filePath.getFileName().toString();
         return new CodeLineFile(tabulatedName, linesOfCode);
     }
 }

@@ -41,7 +41,7 @@ public final class CodeLineFile {
         return qty;
     }
 
-    public long calculateCodeLines() {
+    private long calculateCodeLines() {
         return calculateRecursively(children);
     }
 
@@ -53,7 +53,7 @@ public final class CodeLineFile {
         return name;
     }
 
-    public String toStringRecursively(final List<CodeLineFile> children, final StringBuilder result) {
+    private String toStringRecursively(final List<CodeLineFile> children, final StringBuilder result) {
         for (final CodeLineFile child : children) {
             if (child.getChildren() != null && !child.getChildren().isEmpty()) {
                 result
