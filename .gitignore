@@ -1,4 +1,6 @@
-# Project exclude paths
-/out/
-/.idea/
-/codeminders-tech-task.iml
+.gradle
+gradle
+out
+.idea
+build
+*.iml

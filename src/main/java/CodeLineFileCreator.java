@@ -15,11 +15,11 @@ public final class CodeLineFileCreator {
         if (Files.isRegularFile(rootPath)) {
             return buildSingleFile(rootPath, EMPTY);
         } else {
-            return buildWithIndent(rootPath, root, EMPTY);
+            return buildHierarchy(rootPath, root, EMPTY);
         }
     }
 
-    private static CodeLineFile buildWithIndent(final Path rootPath, final CodeLineFile root, final String indent)
+    private static CodeLineFile buildHierarchy(final Path rootPath, final CodeLineFile root, final String indent)
             throws IOException {
         final String tab = indent + EMPTY_SPACE;
         for (final Path childPath : Files.list(rootPath).collect(Collectors.toList())) {
@@ -28,7 +28,7 @@ public final class CodeLineFileCreator {
                 final CodeLineFile childDirectory = new CodeLineFile(tabulatedName);
                 root.addChild(childDirectory);
 
-                buildWithIndent(childPath, childDirectory, tab);
+                buildHierarchy(childPath, childDirectory, tab);
             } else {
                 final CodeLineFile childFile = buildSingleFile(childPath, tab);
                 root.addChild(childFile);
