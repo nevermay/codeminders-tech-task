@@ -1,6 +1,5 @@
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class CodeLineCounterTest {
 
@@ -16,7 +15,7 @@ public final class CodeLineCounterTest {
     private static Path emptyFile;
     private static Path commentsOnlyFile;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         ordinaryFile = Paths.get("src/test/resources/test_files/root/dir/Test.java");
         emptyFile = Paths.get("src/test/resources/test_files/root/dir/Empty.java");
@@ -28,7 +27,9 @@ public final class CodeLineCounterTest {
         final List<String> lines = Files.readAllLines(ordinaryFile);
         final int numOfLines = CodeLineCounter.count(lines);
 
-        Assert.assertThat("Should be 5 lines of code", numOfLines, is(5));
+        assertThat(numOfLines)
+                .as("Should be 5 lines of code")
+                .isEqualTo(5);
     }
 
     @Test
@@ -36,7 +37,9 @@ public final class CodeLineCounterTest {
         final List<String> lines = Files.readAllLines(emptyFile);
         final int numOfLines = CodeLineCounter.count(lines);
 
-        Assert.assertThat("There should be no code at all", numOfLines, is(0));
+        assertThat(numOfLines)
+                .as("There should be no code at all")
+                .isEqualTo(0);
     }
 
     @Test
@@ -44,6 +47,8 @@ public final class CodeLineCounterTest {
         final List<String> lines = Files.readAllLines(commentsOnlyFile);
         final int numOfLines = CodeLineCounter.count(lines);
 
-        Assert.assertThat("There should be no code but comments", numOfLines, is(0));
+        assertThat(numOfLines)
+                .as("There should be no code but comments")
+                .isEqualTo(0);
     }
 }

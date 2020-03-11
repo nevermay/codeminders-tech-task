@@ -1,19 +1,18 @@
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CodeLineFileCreatorTest {
 
     private static Path file;
     private static Path directory;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         file = Paths.get("src/test/resources/test_files/root/dir/Test.java");
         directory = Paths.get("src/test/resources/test_files/root/another-dir/src");
@@ -25,7 +24,9 @@ public class CodeLineFileCreatorTest {
         final CodeLineFile root = new CodeLineFile(file.getFileName().toString());
         final CodeLineFile codeLineFile = CodeLineFileCreator.build(file, root);
 
-        Assert.assertThat("File should not have children", codeLineFile.getChildren().isEmpty(), is(true));
+        assertThat(codeLineFile.getChildren().isEmpty())
+                .as("File should not have children")
+                .isEqualTo(true);
     }
 
     @Test
@@ -33,6 +34,8 @@ public class CodeLineFileCreatorTest {
         final CodeLineFile root = new CodeLineFile(directory.getFileName().toString());
         final CodeLineFile codeLineFile = CodeLineFileCreator.build(directory, root);
 
-        Assert.assertThat("File should not have children", codeLineFile.getChildren().size(), is(3));
+        assertThat(codeLineFile.getChildren().size())
+                .as("File should have children files only")
+                .isEqualTo(3);
     }
 }
